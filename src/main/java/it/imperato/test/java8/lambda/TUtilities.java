@@ -1,9 +1,11 @@
-package it.imperato.test.java8.lambda.t01;
+package it.imperato.test.java8.lambda;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class T01Utilities {
+import it.imperato.test.java8.lambda.t01.City;
+
+public class TUtilities {
 
 	public static List<City> getAllCityList() {
 		List<City> cities = Arrays.asList(

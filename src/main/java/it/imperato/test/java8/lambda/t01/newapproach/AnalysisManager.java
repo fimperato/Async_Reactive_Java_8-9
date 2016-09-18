@@ -6,9 +6,9 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import it.imperato.test.java8.lambda.TUtilities;
 import it.imperato.test.java8.lambda.t01.City;
 import it.imperato.test.java8.lambda.t01.IConditionTester;
-import it.imperato.test.java8.lambda.t01.T01Utilities;
  
 public class AnalysisManager {
  
@@ -16,7 +16,7 @@ public class AnalysisManager {
 
 	public Set<City> getFilteredCitiesByCondition(IConditionTester<City> tester){
     	Set<City> largest = new HashSet<>();
-    	for (City c : T01Utilities.getAllCityList())
+    	for (City c : TUtilities.getAllCityList())
     		if (tester.test(c))
     			largest.add(c);
     	

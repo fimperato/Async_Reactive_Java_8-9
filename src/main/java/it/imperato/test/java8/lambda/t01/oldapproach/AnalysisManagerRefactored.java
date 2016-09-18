@@ -6,8 +6,8 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import it.imperato.test.java8.lambda.TUtilities;
 import it.imperato.test.java8.lambda.t01.City;
-import it.imperato.test.java8.lambda.t01.T01Utilities;
  
 public class AnalysisManagerRefactored {
  
@@ -15,7 +15,7 @@ public class AnalysisManagerRefactored {
 
     public Set<City> getLargestCities(){
     	Set<City> largest = new HashSet<>();
-    	for (City c : T01Utilities.getAllCityList())
+    	for (City c : TUtilities.getAllCityList())
     		if (isLargestCities(c))
     			largest.add(c);
     	
@@ -24,7 +24,7 @@ public class AnalysisManagerRefactored {
     
     public Set<City> getIntermediatePopulatedCities(){
     	Set<City> intermediate = new HashSet<>();
-    	for (City c : T01Utilities.getAllCityList())
+    	for (City c : TUtilities.getAllCityList())
     		if (isIntermediatePopulatedCities(c))
     			intermediate.add(c);
     	
