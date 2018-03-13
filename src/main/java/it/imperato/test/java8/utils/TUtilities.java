@@ -1,4 +1,4 @@
-package it.imperato.test.java8.lambda;
+package it.imperato.test.java8.utils;
 
 import java.util.Arrays;
 import java.util.List;

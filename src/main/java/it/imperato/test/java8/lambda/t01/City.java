@@ -1,12 +1,17 @@
 package it.imperato.test.java8.lambda.t01;
 
-public class City {
+import java.util.ArrayList;
+import java.util.List;
+
+public class City implements Cloneable, Comparable<City> {
 	 
     private String name;
     private String code;
     private long numInhabitants;
     private int area; // km2
     private String saintPatron;
+
+    private List<String> comuniProvincia = new ArrayList<>();
     
     public City(String name, String code, long numInhabitants, int area, String saintPatron) {
 		super();
@@ -56,5 +61,33 @@ public class City {
 	public void setSaintPatron(String saintPatron) {
 		this.saintPatron = saintPatron;
 	}
-	
+
+	public List<String> getComuniProvincia() { return comuniProvincia; }
+
+	public void setComuniProvincia(List<String> comuniProvincia) { this.comuniProvincia = comuniProvincia; }
+
+	@Override
+	public String toString() {
+		return "City{" +
+				"name='" + name + '\'' +
+				", code='" + code + '\'' +
+				'}';
+	}
+
+	@Override
+	public City clone() {
+		final City clone;
+		try {
+			clone = (City) super.clone();
+		}
+		catch (CloneNotSupportedException ex) {
+			throw new RuntimeException("superclass messed up", ex);
+		}
+		return clone;
+	}
+
+	@Override
+	public int compareTo(City o) {
+		return this.getName().compareTo(o.getName());
+	}
 }

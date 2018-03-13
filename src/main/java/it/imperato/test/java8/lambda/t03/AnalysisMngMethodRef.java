@@ -7,10 +7,9 @@ import java.util.function.Predicate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import it.imperato.test.java8.lambda.TUtilities;
+import it.imperato.test.java8.utils.TUtilities;
 import it.imperato.test.java8.lambda.t01.City;
-import it.imperato.test.java8.lambda.t01.IConditionTester;
- 
+
 public class AnalysisMngMethodRef {
  
 	private Logger logger = LogManager.getLogger(this.getClass().getName());
