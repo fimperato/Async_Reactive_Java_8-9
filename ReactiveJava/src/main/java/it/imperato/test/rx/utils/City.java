@@ -12,7 +12,12 @@ public class City implements Cloneable, Comparable<City> {
     private String saintPatron;
 
     private List<String> comuniProvincia = new ArrayList<>();
-    
+
+	public City(String name) {
+		super();
+		this.name = name;
+	}
+
     public City(String name, String code, long numInhabitants, int area, String saintPatron) {
 		super();
 		this.name = name;

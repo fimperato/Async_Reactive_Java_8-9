@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>it.test.imperato</groupId>
-  <artifactId>RxJava2</artifactId>
+  <artifactId>ReactiveJava</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	  	<maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
+	  	<maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
 		<log4j.version>2.6.2</log4j.version>
 	</properties>
     
@@ -29,6 +29,18 @@
 			<version>2.1.10</version>
 		</dependency>
 
+		<!-- reactive service -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<!-- reactive nosql db -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
+		</dependency>
+
 	</dependencies>
 	
 	<build>
@@ -38,8 +50,9 @@
 	        <artifactId>maven-compiler-plugin</artifactId>
 	        <version>${maven.compiler.plugin.version}</version>
 	        <configuration>
-	          <source>1.8</source>
-	          <target>1.8</target>
+	          	<source>1.8</source>
+	          	<target>1.8</target>
+				<encoding>UTF-8</encoding>
 	        </configuration>
 	      </plugin>
 	    </plugins>

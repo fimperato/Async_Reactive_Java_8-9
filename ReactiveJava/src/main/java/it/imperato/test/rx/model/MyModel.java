@@ -1,4 +1,4 @@
-package it.imperato.test.rx;
+package it.imperato.test.rx.model;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
