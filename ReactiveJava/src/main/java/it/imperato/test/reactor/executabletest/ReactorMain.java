@@ -19,7 +19,7 @@ public class ReactorMain {
 
     private static Logger log  = LogManager.getLogger(ReactorMain.class);
 
-    private static List<String> squadre = Arrays.asList("Inter","Juventus","Milan","Napoli","Roma");
+    public static List<String> squadre = Arrays.asList("Inter","Juventus","Milan","Napoli","Roma");
 
     private static double totalElaborationTimeExpected;
     private static long TEMPO_CHIAMATA_SERVICE_LEVEL_1 = 1500; // millis
@@ -110,7 +110,7 @@ public class ReactorMain {
     }
 
     // Esegue un calcolo dello score del giocatore
-    private static Object calculatePlayerTotalScore(Object documents) {
+    private static Object calculatePlayerTotalScore(Object parsedResponse) {
         try {
             Thread.currentThread().sleep(TEMPO_CHIAMATA_SERVICE_LEVEL_2);
             log.info("calculatePlayerTotalScore called [service]");
@@ -128,7 +128,7 @@ public class ReactorMain {
         return new Object();
     }
 
-    private static String getServerUrlBy(String squadra) {
+    public static String getServerUrlBy(String squadra) {
         log.info("getServerUrlBy called");
         return "hostname_"+squadra;
     }
