@@ -12,7 +12,7 @@ public class PlayerResponse {
     private BigDecimal averageScore;
     private BigDecimal averageScoreWithBonus;
 
-    public PlayerResponse(String nome) {
+    public PlayerResponse() {
         super();
     }
 
