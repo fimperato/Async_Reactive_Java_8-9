@@ -77,4 +77,18 @@ public class PlayerRequest {
     public void setRequestUrl(String requestUrl) {
         this.requestUrl = requestUrl;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerRequest{" +
+                "nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", dataNascita=" + dataNascita +
+                ", squadra='" + squadra + '\'' +
+                ", scoring=" + scoring +
+                ", anagrafica=" + anagrafica +
+                ", numLastPartite=" + numLastPartite +
+                ", requestUrl='" + requestUrl + '\'' +
+                '}';
+    }
 }

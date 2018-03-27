@@ -7,6 +7,7 @@ import it.imperato.test.reactor.model.PlayerResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import reactor.core.Disposable;
@@ -42,7 +43,7 @@ public class PlayerController {
 
     /**
      * Eseguire con:
-     * curl -d '{"nome":"nome1", "cognome":"cognome1"}' -H "Content-Type: application/json" -X POST http://[host]:[port]/ReactiveJava/api/playerScore
+     * curl -d '{"nome":"nome1", "cognome":"cognome1", "squadra":"Juventus"}' -H "Content-Type: application/json" -X POST http://[host]:[port]/ReactiveJava/api/playerScore
      *
      * @param player
      * @return
@@ -96,12 +97,18 @@ public class PlayerController {
     public PlayerResponse extractPlayerInfo(PlayerRequest playerRequest) {
         // call service to extract item here:
         final String uri = "http://"+apis_call_host+":"+apis_call_port+"/ReactiveJava/anag/anagPlayer";
-
         //RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);
         if(result!=null&&result.contains("OK")) {
-            // item extracted here todo
-            return new PlayerResponse();
+            // test (con GET) ok: chiamo il service endpoint per i risultati:
+            log.info("[extractPlayerInfo] playerRequest: "+playerRequest);
+            String paramSquadraForServer = playerRequest.getRequestUrl().split("_")[1];
+            log.info("[extractPlayerInfo] paramSquadraForServer: "+paramSquadraForServer+" ...searching...");
+            final String playerAnagUri = "http://"+apis_call_host+":"+apis_call_port
+                    +"/ReactiveJava/anag/"+paramSquadraForServer+"/anagPlayer";
+            ResponseEntity<PlayerResponse> playerResponseEntity = restTemplate
+                    .postForEntity(playerAnagUri, playerRequest, PlayerResponse.class);
+            return playerResponseEntity!=null? playerResponseEntity.getBody() : null;
         }
         return null;
     }
@@ -112,8 +119,11 @@ public class PlayerController {
 
         String result = restTemplate.getForObject(uri, String.class);
         if(result!=null&&result.contains("OK")) {
-            // item extracted here todo
-            return new PlayerResponse();
+            // test (con GET) ok: chiamo il service endpoint per i risultati:
+            final String playerAnagUri = "http://"+apis_call_host+":"+apis_call_port+"/ReactiveJava/scoring/scoringCalculate";
+            ResponseEntity<PlayerResponse> playerResponseEntity = restTemplate
+                    .postForEntity(playerAnagUri, playerRequest, PlayerResponse.class);
+            return playerResponseEntity!=null? playerResponseEntity.getBody() : null;
         }
         return null;
     }

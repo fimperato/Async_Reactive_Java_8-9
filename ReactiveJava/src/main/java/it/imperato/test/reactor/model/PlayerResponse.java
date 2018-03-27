@@ -73,4 +73,16 @@ public class PlayerResponse {
     public void setAverageScoreWithBonus(BigDecimal averageScoreWithBonus) {
         this.averageScoreWithBonus = averageScoreWithBonus;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerResponse{" +
+                "nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", dataNascita=" + dataNascita +
+                ", squadra='" + squadra + '\'' +
+                ", averageScore=" + averageScore +
+                ", averageScoreWithBonus=" + averageScoreWithBonus +
+                '}';
+    }
 }

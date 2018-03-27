@@ -1,12 +1,14 @@
 package it.imperato.test.controller;
 
+import it.imperato.test.reactor.model.PlayerResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.math.BigDecimal;
+import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 @RequestMapping("/scoring")
@@ -15,14 +17,32 @@ public class SlowRestScoringCalculateController {
     private static Logger log  = LogManager.getLogger(SlowRestScoringCalculateController.class);
 
     @GetMapping(path = "/scoringCalculate")
-    public String scoringCalculate() {
+    public String scoringCalculateGet() {
         try {
-            // result: PlayerResponse con dentro gli scoring richiesti (e nome thread)
-            Thread.sleep(2000);
+            // chiamata get di test
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return "scoringCalculate-OK";
+    }
+
+    @PostMapping(path = "/scoringCalculate")
+    public PlayerResponse scoringCalculatePost(@RequestBody PlayerResponse playerResponse) {
+        log.info("[scoringCalculate] Init.. with playerResponse: "+playerResponse);
+        float maxValueExclusive = 8f;
+        float maxValueWithBonusExclusive = 15.5f;
+        try {
+            // result: PlayerResponse con gli scoring richiesti (e nome thread)
+            playerResponse.setAverageScore(new BigDecimal( Float.toString(ThreadLocalRandom.current().nextFloat()*maxValueExclusive) )); // (random) scoring by 2nd server: average
+            playerResponse.setAverageScoreWithBonus(new BigDecimal( ThreadLocalRandom.current().nextFloat()*maxValueWithBonusExclusive )); // (random) scoring by 2nd server: average with bonus
+            playerResponse.setCognome(playerResponse.getCognome()+"_"+Thread.currentThread().getName());
+            Thread.sleep(2000);
+            log.info("[scoringCalculate] result by rest service (playerResponse): "+playerResponse);
+        } catch (Exception e) {
+            log.error("PostMapping [scoringCalculatePost] ERR: "+e.getMessage(),e);
+        }
+        return playerResponse;
     }
 
 }
