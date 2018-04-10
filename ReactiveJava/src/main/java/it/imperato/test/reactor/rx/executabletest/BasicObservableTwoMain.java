@@ -1,12 +1,12 @@
-package it.imperato.test.rx.executabletest;
+package it.imperato.test.reactor.rx.executabletest;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
-import it.imperato.test.rx.model.MyModel;
-import it.imperato.test.rx.utils.City;
-import it.imperato.test.rx.utils.TUtilities;
+import it.imperato.test.reactor.rx.model.MyModel;
+import it.imperato.test.reactor.rx.utils.City;
+import it.imperato.test.reactor.rx.utils.TUtilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

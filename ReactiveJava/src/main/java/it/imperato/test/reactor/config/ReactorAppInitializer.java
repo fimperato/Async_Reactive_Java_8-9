@@ -1,4 +1,4 @@
-package it.imperato.test.config;
+package it.imperato.test.reactor.config;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

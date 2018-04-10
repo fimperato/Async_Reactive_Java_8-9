@@ -1,4 +1,4 @@
-package it.imperato.test.controller;
+package it.imperato.test.reactor.controller;
 
 import it.imperato.test.reactor.executabletest.ReactorMain;
 import it.imperato.test.reactor.model.Player;

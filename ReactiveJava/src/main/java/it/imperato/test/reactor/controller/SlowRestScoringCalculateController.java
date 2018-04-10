@@ -1,11 +1,9 @@
-package it.imperato.test.controller;
+package it.imperato.test.reactor.controller;
 
 import it.imperato.test.reactor.model.PlayerResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
