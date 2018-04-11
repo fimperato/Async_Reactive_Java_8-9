@@ -1,4 +1,4 @@
-package it.imperato.test.reactor.rx.utils;
+package it.imperato.test.rx.utils;
 
 import java.util.ArrayList;
 import java.util.List;
