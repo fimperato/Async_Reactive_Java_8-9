@@ -1,12 +1,24 @@
 package it.imperato.test.webflux.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "vociCV")
 public class VoceCV {
 
+    @Id
     private String id;
+
     private String sezione;
     private String sottosezione;
     private String chiave;
     private String valore;
+
+    public VoceCV(String sezione, String chiave, String valore) {
+        this.sezione = sezione;
+        this.chiave = chiave;
+        this.valore = valore;
+    }
 
     public String getId() {
         return id;

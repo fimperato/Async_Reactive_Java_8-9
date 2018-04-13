@@ -32,6 +32,15 @@ public class WebFluxJavaApplication implements CommandLineRunner {
             log.info(vociCVFlux != null ? vociCVFlux.toString() : "N.D.");
 
             // Save initial voci cv
+            // Rimuovo tutte le voci precedenti (dati di test)
+            voceCVMongoNonBlockingRepo.deleteAll();
+
+            // Inserimento vociCV
+            VoceCV voceCV1 = new VoceCV("anagrafica", "nome", "Francesco");
+            voceCVMongoNonBlockingRepo.save(voceCV1);
+            VoceCV voceCV2 = new VoceCV("anagrafica", "cognome", "Imperato");
+            voceCVMongoNonBlockingRepo.save(voceCV2);
+
 
         } catch(Exception e) {
             log.error("ERRORE in application run (MongoDB not started on host): " +e.getMessage());
