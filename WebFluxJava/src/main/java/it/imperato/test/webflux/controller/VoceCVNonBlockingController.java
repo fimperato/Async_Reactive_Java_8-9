@@ -3,17 +3,17 @@ package it.imperato.test.webflux.controller;
 import it.imperato.test.webflux.model.VoceCV;
 import it.imperato.test.webflux.repository.VoceCVMongoNonBlockingRepo;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 
 @RestController
+@RequestMapping("/api/cv")
 public class VoceCVNonBlockingController {
 
-    private static final int DELAY_PER_ITEM_MS = 100;
+    private static final int DELAY_PER_ITEM_MS = 3000;
 
     private VoceCVMongoNonBlockingRepo voceCVMongoReactiveRepository;
 
@@ -21,9 +21,10 @@ public class VoceCVNonBlockingController {
         this.voceCVMongoReactiveRepository = voceCVMongoNonBlockingRepo;
     }
 
-    @GetMapping("/vociCV-nonBlocking")
+    @GetMapping(path = "/vociCV-nonBlocking", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @ResponseBody
     public Flux<VoceCV> getVoceCVFlux() {
-        // to use a shorter version of the Flux -> take(100) at the end of the statement:
+        // to use a shorter version of the Flux -> take(n) at the end of the statement:
         return voceCVMongoReactiveRepository.findAll().delayElements(Duration.ofMillis(DELAY_PER_ITEM_MS));
     }
 

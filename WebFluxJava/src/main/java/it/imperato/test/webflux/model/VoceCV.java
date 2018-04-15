@@ -14,7 +14,12 @@ public class VoceCV {
     private String chiave;
     private String valore;
 
+    public VoceCV() {
+        super();
+    }
+
     public VoceCV(String sezione, String chiave, String valore) {
+        super();
         this.sezione = sezione;
         this.chiave = chiave;
         this.valore = valore;
@@ -58,5 +63,16 @@ public class VoceCV {
 
     public void setValore(String valore) {
         this.valore = valore;
+    }
+
+    @Override
+    public String toString() {
+        return "VoceCV{" +
+                "id='" + id + '\'' +
+                ", sezione='" + sezione + '\'' +
+                ", sottosezione='" + sottosezione + '\'' +
+                ", chiave='" + chiave + '\'' +
+                ", valore='" + valore + '\'' +
+                '}';
     }
 }
