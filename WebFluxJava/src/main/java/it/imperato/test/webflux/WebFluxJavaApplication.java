@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-// @ComponentScan(basePackageClasses = {MyRestController.class, MyAuthService.class, EncryptionUtils.class})
+// @ComponentScan(basePackageClasses = {CorsFilter.class, classes in it.imperato.test.webflux..})
 public class WebFluxJavaApplication implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(WebFluxJavaApplication.class);

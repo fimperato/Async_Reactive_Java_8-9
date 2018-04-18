@@ -12,7 +12,7 @@ public class WebFluxClientJavaApplication implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(WebFluxClientJavaApplication.class);
 
     public static void main(String[] args){
-        log.info("Spring Boot WebFluxJava Application started.");
+        log.info("Spring Boot WebFluxClientJava Application started.");
         SpringApplication.run(WebFluxClientJavaApplication.class, args);
     }
 
