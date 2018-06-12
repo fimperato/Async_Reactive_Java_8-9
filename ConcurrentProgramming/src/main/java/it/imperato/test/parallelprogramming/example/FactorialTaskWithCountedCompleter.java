@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import it.imperato.test.utils.CalcUtil;
+import it.imperato.test.utils.CalcUtils;
 
 public class FactorialTaskWithCountedCompleter {
 
@@ -113,7 +113,7 @@ public class FactorialTaskWithCountedCompleter {
        private void sumFactorials () {
     	   
     	   for (BigInteger i : integerList) {
-    		   addFactorialToResult(CalcUtil.calculateFactorial(i));
+    		   addFactorialToResult(CalcUtils.calculateFactorial(i));
     	   }
        }
        

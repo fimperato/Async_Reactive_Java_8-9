@@ -2,7 +2,7 @@ package it.imperato.test.utils;
 
 import java.math.BigInteger;
 
-public class CalcUtil {
+public class CalcUtils {
 	
 	/**
 	 * Esegue il calcolo fattoriale di x int
