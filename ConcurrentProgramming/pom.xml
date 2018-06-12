@@ -2,11 +2,11 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>edu.coursera.parallel</groupId>
-    <artifactId>miniproject_0</artifactId>
+    <groupId>it.imperato.test</groupId>
+    <artifactId>ConcurrentProgramming</artifactId>
     <packaging>jar</packaging>
     <version>0.0</version>
-    <name>miniproject_0</name>
+    <name>ConcurrentProgramming</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
