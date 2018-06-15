@@ -1,11 +1,11 @@
 package it.imperato.test.parallelprogramming.forkjoin;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import it.imperato.test.asyncutils.PPUtils;
 import it.imperato.test.parallelprogramming.example.RicercaFileInDirectoryTask;
 import it.imperato.test.utils.Utils;
 
@@ -17,104 +17,118 @@ import it.imperato.test.utils.Utils;
  */
 public class ParallelVsSequentialSum {
 
-	private static Logger log = LogManager.getLogger(RicercaFileInDirectoryTask.class);
+	private static Logger log = LogManager.getLogger(ParallelVsSequentialSum.class);
 	
-	private static double sum1;
-    private static double sum2;
+	private static int DEFAULT_N = (int) 5e7; // 50 milioni
+    private static String ERROR_MSG = "ERRORE";
     
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] argv) throws Exception {
     	
-        int length = (int) 5e7; // 50 milioni
-
-        double[] arr = Utils.generateArraySeq(length);
-
-        for (int numRun = 0; numRun < 5; numRun++) {
-        	log.info("Run {} \n", numRun);
-//            PPUtils.finish(() -> {
-                seqArraySum(arr);
-                parArraySum(arr);
-//            });
-}
-    }
-    	
-	public static double seqArraySum(final double[] arr) {
-        final long startTime = System.nanoTime();
-        double sum1 = 0;
-        double sum2 = 0;
-        // Compute sum of lower half of array
-        for (int i = 0; i < arr.length / 2; i++) {
-            sum1 += 1 / arr[i];
-        }
-        // Compute sum of upper half of array
-        for (int i = arr.length / 2; i < arr.length; i++) {
-            sum2 += 1 / arr[i];
-        }
-        // Combine sum1 and sum2
-        final double sum = sum1 + sum2;
-        final long timeInNanos = System.nanoTime() - startTime;
-
-        Utils.printResult("task: sequential", timeInNanos, "sum", sum);
-        // Task T0 waits for Task T1 (join)
-        return sum;
-	}
-	
-	public static double parArraySum(double[] arr) throws Exception {
-        // Start of Task T0 (main program)
-        final long startTime = System.nanoTime();
-        sum1 = 0;
-        sum2 = 0;
-        PPUtils.finish(() -> {
-        	PPUtils.async(() -> {
-                // Compute sum of lower half of array
-                for (int i = 0; i < arr.length / 2; i++) {
-                    sum1 += 1 / arr[i];
-                }
-            });
-            // Compute sum of upper half of array
-            for (int i = arr.length / 2; i < arr.length; i++) {
-                sum2 += 1 / arr[i];
-            }
-        });
-        // Combine sum1 and sum2
-        final double sum = sum1 + sum2;
-        final long timeInNanos = System.nanoTime() - startTime;
+//        int length = (int) 5e7; // 50 milioni
+//
+//        double[] arr = Utils.generateArraySeq(length);
+//
+//        for (int numRun = 0; numRun < 5; numRun++) {
+//        	log.info("\n\n Run {} \n", numRun);
+//            seqArraySum(arr);
+//            parArraySum(arr);
+//        }
         
-        Utils.printResult("parArraySum", timeInNanos, "sum", sum);
-        // Task T0 waits for Task T1 (join)
-        return sum;
-	}
-
-    public static double parArraySum_v2(double[] arr) {
+        int n;
+    	if(argv.length !=0) {
+    		try {
+    			n = Integer.parseInt(argv[0]);
+    			if(n <=0 ) {
+    				// valor incorrecto de n
+    				log.error(ERROR_MSG);
+    				n = DEFAULT_N;
+    			}
+    		} catch (Throwable e) {
+    			log.error(ERROR_MSG);
+    			n = DEFAULT_N;
+    		}
+    	} else { // argv.length == 0
+    		n = DEFAULT_N;
+    	}
+    	double[] X = new double[n]; 
+    	
+    	for(int i=0; i <n; i++) {
+    		X[i] = (i + 1);
+    	}
+    	
+    	// definizione del numero di 'workers' da utilizzare per il ForKJoinPool.commonPool()
+    	System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "4");
+    	
+    	for (int numRun = 0; numRun < 5; numRun++) {
+        	log.info("\n\n Run {} \n", numRun);
+    		seqArraySum(X);
+    		parArraySum(X);
+    	}
+    }
+    	
+    public static double seqArraySum(double[] X) {
     	long startTime = System.nanoTime();
-        AtomicReference<Double> atomicReference = new AtomicReference<Double>(0.0d);
-        AtomicReference<Double> atomicReference2 = new AtomicReference<Double>(0.0d);
-
-        // find sum of lower-half
-        PPUtils.finish(() -> {
-	        PPUtils.async(() -> {
-	            for (int i = 0; i < arr.length / 2; i++) {
-	                atomicReference.set(atomicReference.get() + 1 / arr[i]);
-	            }
-	        });
-	
-	        PPUtils.async(() -> {
-		        // find sum of upper-half
-		        for (int i = arr.length / 2 + 1; i < arr.length; i++) {
-		        	atomicReference2.set(atomicReference2.get() + 1 / arr[i]);
-		        }
-	        });
-	       
-   		});
-
-        // Combine both sums
-        double sum = atomicReference2.get() + atomicReference.get();
-
-        long endTime = System.nanoTime();
-        long timeInNanos = endTime - startTime;
-        Utils.printResult("task: parallel", timeInNanos, "sum", sum);
-
-        return sum;
+    	double sum = 0;
+    	for (int i=0; i < X.length; i++) {
+    		sum += 1/X[i];
+    	}
+    	long timeInNanos = System.nanoTime() - startTime;
+    	Utils.printResult("seqArraySum", timeInNanos, "sum", sum);
+    	return sum;
     }
 
+    /**
+     * <p>parArraySum</p>
+     * Versione parallelizzata.
+     * 
+     * @param X array di double
+     * @return sum of 1/X[i] for 0 <= i < X.length
+    */
+    public static double parArraySum(double[] X) {
+    	int nThreads = Runtime.getRuntime().availableProcessors();
+        log.info("availableProcessors :"+nThreads);
+        ForkJoinPool forkJoinPool = new ForkJoinPool(nThreads);
+        
+    	long startTime = System.nanoTime();
+    	SumArray t = new SumArray(X, 0, X.length);
+//    	ForkJoinPool.commonPool().invoke(t);
+    	forkJoinPool.invoke(t);
+    	double sum = t.ans;
+    	long timeInNanos = System.nanoTime() - startTime;
+    	Utils.printResult("parArraySum", timeInNanos, "sum", sum);
+    	return sum;
+    }
+    
+    private static class SumArray extends RecursiveAction {
+
+		private static final long serialVersionUID = 1L;
+		
+		static int SEQUENTIAL_THRESHOLD = 5;
+		
+    	int lo;
+    	int hi;
+    	double arr[];
+    	double ans = 0;
+    	
+    	SumArray(double[] a, int l, int h) {
+    		lo =l;
+    		hi = h;
+    		arr = a;
+    	}
+    	
+    	protected void compute() {
+    		if (hi - lo <= SEQUENTIAL_THRESHOLD) {
+    			for (int i = lo; i < hi; ++i)
+    				ans += 1 / arr[i];
+    		} else {
+    			SumArray left = new SumArray(arr, lo, (hi + lo) /2);
+    			SumArray right = new SumArray(arr, (hi + lo) /2, hi);
+    			left.fork();
+    			right.compute();
+    			left.join();
+    			ans = left.ans + right.ans;
+    		}
+    	} 
+    } 
     
 }
