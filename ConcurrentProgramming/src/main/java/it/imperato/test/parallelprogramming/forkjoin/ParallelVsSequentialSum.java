@@ -6,7 +6,6 @@ import java.util.concurrent.RecursiveAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import it.imperato.test.parallelprogramming.example.RicercaFileInDirectoryTask;
 import it.imperato.test.utils.Utils;
 
 /**
@@ -73,7 +72,7 @@ public class ParallelVsSequentialSum {
     		sum += 1/X[i];
     	}
     	long timeInNanos = System.nanoTime() - startTime;
-    	Utils.printResult("seqArraySum", timeInNanos, "sum", sum);
+    	Utils.printResult("sequentialComputing", timeInNanos, "sum", sum);
     	return sum;
     }
 
@@ -95,7 +94,7 @@ public class ParallelVsSequentialSum {
     	forkJoinPool.invoke(t);
     	double sum = t.ans;
     	long timeInNanos = System.nanoTime() - startTime;
-    	Utils.printResult("parArraySum", timeInNanos, "sum", sum);
+    	Utils.printResult("parallelComputing", timeInNanos, "sum", sum);
     	return sum;
     }
     
